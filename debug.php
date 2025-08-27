@@ -1,9 +1,9 @@
 <?php
 // Elixir + Rust fanboy :>
 
-function dbg($input) {
-  var_dump($input);
-  return $input;
+function dbg($thing) {
+  var_dump($thing);
+  return $thing;
 }
 
 function todo($msg) {

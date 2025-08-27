@@ -48,6 +48,10 @@ function group_by($items, $prefix) {
   return $grouped;
 }
 
+function find_by($haystack, $key, $value) {
+  return $haystack[array_find_key($haystack, fn($v, $k) => $value == $v && $key == $k)];
+}
+
 function take($array, $amount) {
   return array_slice($array, 0, $amount);
 }

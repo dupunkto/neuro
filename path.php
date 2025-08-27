@@ -29,3 +29,15 @@ function path_join() {
 
   return preg_replace('#/+#','/',join('/', $paths));
 }
+
+function path_parent($path) {
+  $last = strrpos($path, '/');
+  if ($last == false) return false;
+  return substr($path, 0, $last);
+}
+
+function resolve_path($root, $path) {
+  if(realpath($root) != $root) return false;
+  $path = realpath($path);
+  return str_starts_with($path, $root) ? $path : false;
+}

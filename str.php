@@ -1,17 +1,26 @@
 <?php
 // String utilities
 
-function is_url($str) {
-  return str_starts_with($str, "http://") 
-  	or str_starts_with($str, "https://");
+function is_whitespace($c) {
+  return in_array($c, array(" ", "\t", "\n", "\r", "\0", "\x0B"));
 }
 
 function is_email($str) {
   return substr_count($str, '@') == 1;
 }
 
-function is_whitespace($c) {
-  return in_array($c, array(" ", "\t", "\n", "\r", "\0", "\x0B"));
+function is_url($str) {
+  // In the context of HTML, paths starting with double slashes
+  // are often treated as full-blown HTTP urls. (Where the double
+  // slash indicated 'use current protocol'.)
+
+  return str_starts_with($url, "http://") 
+    || str_starts_with($url, "https://")
+    || str_starts_with($url, "//");
+}
+
+function ensure_prefix($str, $prefix) {
+  return str_starts_with($str, $prefix) ? $str : $prefix. $str;
 }
 
 function strip_prefix($str, $prefix) {
@@ -24,6 +33,10 @@ function replace_prefix($str, $old, $new) {
   } else {
     return $str;
   }
+}
+
+function ensure_suffix($str, $suffix) {
+  return str_ends_with($str, $suffix) ? $str : $str . $suffix;
 }
 
 function strip_suffix($str, $suffix) {
@@ -50,4 +63,9 @@ function slugify($text, $length = null) {
     $text = rtrim(substr($text, 0, $length), '-');
 
   return $text;
+}
+
+function extract_email($email) {
+  preg_match('/<([^<>]+)>/', $email, $matches);
+  return $matches[1] ?? null;
 }
