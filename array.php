@@ -17,9 +17,9 @@ function zip($separator, $array) {
 }
 
 function flatten($array) {
-  $result = []; // Ew, wdym constructing a new one?
-  array_walk_recursive($array, fn($value) => $result[] = $value);
-  return $result;
+  return array_reduce($array, function ($carry, $item) {
+    return array_merge($carry, is_array($item) ? flatten($item) : [$item]);
+  }, []);
 }
 
 function count_by($array, $key) {
