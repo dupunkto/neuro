@@ -7,13 +7,19 @@ function assoc($term) {
   return $term;
 }
 
-function flatten($separator, $array) {
+function zip($separator, $array) {
   $keys = array_keys($array);
   $values = array_values($array);
   
   return array_map(function($key, $value) use ($separator) {
     return $key . $separator . $value;
   }, $keys, $values);
+}
+
+function flatten($array) {
+  $result = []; // Ew, wdym constructing a new one?
+  array_walk_recursive($array, fn($value) => $result[] = $value);
+  return $result;
 }
 
 function count_by($array, $key) {

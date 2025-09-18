@@ -13,7 +13,7 @@ function request($uri, $headers = [], $options = []) {
     CURLOPT_TIMEOUT => 5,
 
     // Request headers
-    CURLOPT_HTTPHEADER => flatten(": ", $headers)
+    CURLOPT_HTTPHEADER => zip(": ", $headers)
   ]);
   
   curl_setopt_array($ch, $options);
