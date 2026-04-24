@@ -17,8 +17,8 @@ function zip($separator, $array) {
 }
 
 function flatten($array) {
-  return array_reduce($array, function ($carry, $item) {
-    return array_merge($carry, is_array($item) ? flatten($item) : [$item]);
+  return array_reduce($array, function($acc, $item) {
+    return array_merge($acc, is_array($item) ? flatten($item) : [$item]);
   }, []);
 }
 
@@ -62,6 +62,13 @@ function take($array, $amount) {
   return array_slice($array, 0, $amount);
 }
 
+function map($array, $key_k, $value_k) {
+  return array_reduce($array, function($acc, $item) {
+    $acc[$item[$key_k]] = $item[$value_k];
+    return $acc;
+  }, []);
+}
+
 function prefix_keys($array, $prefix) {
   return array_combine(
     array_map(fn($k) => "$prefix$k", array_keys($array)),
@@ -84,9 +91,7 @@ function unprefix_keys($array, $prefix) {
 }
 
 function drop_empty($array) {
-  return array_filter($array, function($value) {
-    return !in_array($value, ["", null, false]);
-  });
+  return array_filter($array, fn($value) => !in_array($value, ["", null, false]));
 }
 
 function deep_contains($haystack, $needle) {
