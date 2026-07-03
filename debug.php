@@ -3,7 +3,8 @@
 
 function dbg($thing) {
   echo "[dbg] ";
-  var_dump($thing);
+  var_export($thing);
+  echo "<br>";
   return $thing;
 }
 
