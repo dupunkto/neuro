@@ -69,3 +69,9 @@ function extract_email($email) {
   preg_match('/<([^<>]+)>/', $email, $matches);
   return $matches[1] ?? null;
 }
+
+function extract_match($str, $pattern, $group = 1) {
+  $acc = [];
+  preg_match_all($pattern, $str, $acc);
+  return $group == false ? $acc : $acc[$group];
+}
