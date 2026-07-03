@@ -54,6 +54,27 @@ function group_by($items, $prefix) {
   return $grouped;
 }
 
+function collect_by($items, $prefix, $as) {
+  $grouped = [];
+  $prefix_str = $prefix . '_';
+
+  foreach ($items as $item) {
+    $id = $item['id'];
+
+    if (!isset($grouped[$id])) {
+      $base = array_filter($item, fn($k) => !str_starts_with($k, $prefix_str), ARRAY_FILTER_USE_KEY);
+      $grouped[$id] = array_merge($base, [$as => []]);
+    }
+
+    $nested = unprefix_keys($item, $prefix);
+    if (array_filter($nested, fn($v) => $v !== null)) {
+      $grouped[$id][$as][] = $nested;
+    }
+  }
+
+  return array_values($grouped);
+}
+
 function find_by($haystack, $key, $value) {
   foreach ($haystack as $item)
     if (@$item[$key] === $value) return $item;
