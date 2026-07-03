@@ -55,7 +55,10 @@ function group_by($items, $prefix) {
 }
 
 function find_by($haystack, $key, $value) {
-  return $haystack[array_find_key($haystack, fn($v, $k) => $value == $v && $key == $k)];
+  foreach ($haystack as $item)
+    if (@$item[$key] === $value) return $item;
+
+  return null;
 }
 
 function take($array, $amount) {
