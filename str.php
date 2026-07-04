@@ -44,7 +44,7 @@ function strip_suffix($str, $suffix) {
 }
 
 function replace_suffix($str, $old, $new) {
-  if (str_ends_with($str, $old)) {
+  if(str_ends_with($str, $old)) {
     return substr($str, 0, strlen($str) - strlen($old)) . $new;
   } else {
     return $str;
@@ -59,7 +59,7 @@ function slugify($text, $length = null) {
   $text = preg_replace('~-+~', '-', $text);
   $text = strtolower($text);
 
-  if (isset($length) and $length < strlen($text))
+  if(isset($length) and $length < strlen($text))
     $text = rtrim(substr($text, 0, $length), '-');
 
   return $text;

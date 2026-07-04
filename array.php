@@ -2,8 +2,8 @@
 // Array utilities.
 
 function assoc($term) {
-  if (is_object($term)) $term = get_object_vars($term);
-  if (is_array($term)) return array_map(__FUNCTION__, $term);
+  if(is_object($term)) $term = get_object_vars($term);
+  if(is_array($term)) return array_map(__FUNCTION__, $term);
   return $term;
 }
 
@@ -25,7 +25,7 @@ function flatten($array) {
 function count_by($array, $key) {
   $keys = array_column($array, $key);
   $array = array_reduce($keys, function($acc, $key) {
-    if (isset($acc[$key])) $acc[$key]++;
+    if(isset($acc[$key])) $acc[$key]++;
     else $acc[$key] = 1;
 
     return $acc;
@@ -38,10 +38,10 @@ function count_by($array, $key) {
 function group_by($items, $prefix) {
   $grouped = [];
   
-  foreach ($items as $item) {
+  foreach($items as $item) {
     $id = $item[$prefix . "_id"];
 
-    if (!isset($grouped[$id])) {
+    if(!isset($grouped[$id])) {
       $grouped[$id] = array_merge(
           unprefix_keys($item, $prefix),
           ['items' => []]
@@ -58,16 +58,16 @@ function collect_by($items, $prefix, $as) {
   $grouped = [];
   $prefix_str = $prefix . '_';
 
-  foreach ($items as $item) {
+  foreach($items as $item) {
     $id = $item['id'];
 
-    if (!isset($grouped[$id])) {
+    if(!isset($grouped[$id])) {
       $base = array_filter($item, fn($k) => !str_starts_with($k, $prefix_str), ARRAY_FILTER_USE_KEY);
       $grouped[$id] = array_merge($base, [$as => []]);
     }
 
     $nested = unprefix_keys($item, $prefix);
-    if (array_filter($nested, fn($v) => $v !== null)) {
+    if(array_filter($nested, fn($v) => $v !== null)) {
       $grouped[$id][$as][] = $nested;
     }
   }
@@ -76,8 +76,8 @@ function collect_by($items, $prefix, $as) {
 }
 
 function find_by($haystack, $key, $value) {
-  foreach ($haystack as $item)
-    if (@$item[$key] === $value) return $item;
+  foreach($haystack as $item)
+    if(@$item[$key] === $value) return $item;
 
   return null;
 }
@@ -105,8 +105,8 @@ function unprefix_keys($array, $prefix) {
   $prefix = $prefix."_";
   $len = strlen($prefix);
 
-  foreach ($array as $key => $value) {
-    if (strpos($key, $prefix) === 0) {
+  foreach($array as $key => $value) {
+    if(strpos($key, $prefix) === 0) {
       $filtered[substr($key, $len)] = $value; 
     }
   }

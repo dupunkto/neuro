@@ -23,8 +23,8 @@ function path_mime($path) {
 
 function path_join() {
   $paths = [];
-  foreach (func_get_args() as $arg) {
-    if ($arg !== '') $paths[] = $arg;
+  foreach(func_get_args() as $arg) {
+    if($arg !== '') $paths[] = $arg;
   }
 
   return preg_replace('#/+#','/',join('/', $paths));
@@ -32,7 +32,7 @@ function path_join() {
 
 function path_parent($path) {
   $last = strrpos($path, '/');
-  if ($last == false) return false;
+  if($last == false) return false;
   return substr($path, 0, $last);
 }
 
