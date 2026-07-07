@@ -14,9 +14,10 @@ function is_url($str) {
   // are often treated as full-blown HTTP urls. (Where the double
   // slash indicated 'use current protocol'.)
 
-  return str_starts_with($str, "http://") 
+  return str_starts_with($str, "http://")
     || str_starts_with($str, "https://")
-    || str_starts_with($str, "//");
+    || str_starts_with($str, "//")
+    || str_starts_with($str, "data:");
 }
 
 function ensure_prefix($str, $prefix) {
