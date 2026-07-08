@@ -121,8 +121,3 @@ function drop_empty($array) {
 function deep_contains($haystack, $needle) {
   return $needle and count(array_filter($haystack, fn($candidate) => strpos($needle, $candidate) != false)) > 0;
 }
-
-function allset($array, $keys) {
-  foreach($keys as $key) if(!isset($array[$key])) return false;
-  return true;
-}
