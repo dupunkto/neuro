@@ -52,6 +52,15 @@ function replace_suffix($str, $old, $new) {
   }
 }
 
+function is_nonempty_str($str) {
+  return trim($str ?? "") !== "";
+}
+
+function str_join($glue, $parts) {
+  $parts = array_map('trim', $parts);
+  return implode($glue, array_filter($parts, fn($p) => $p !== ""));
+}
+
 function slugify($text, $length = null) {
   $text = strtr($text, UNICODE_TABLE);
   $text = preg_replace('~[^\pL\d.]+~u', '-', $text);
