@@ -93,6 +93,10 @@ function map($array, $key_k, $value_k) {
   }, []);
 }
 
+function repeat($keys, $value) {
+  return array_fill_keys($keys, $value);
+}
+
 function prefix_keys($array, $prefix) {
   return array_combine(
     array_map(fn($k) => "$prefix$k", array_keys($array)),

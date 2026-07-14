@@ -56,9 +56,13 @@ function is_nonempty_str($str) {
   return trim($str ?? "") !== "";
 }
 
-function str_join($glue, $parts) {
+function str_implode($glue, $parts) {
   $parts = array_map('trim', $parts);
   return implode($glue, array_filter($parts, fn($p) => $p !== ""));
+}
+
+function str_explode($str) {
+  return preg_split('/\s+/', trim($str), -1, PREG_SPLIT_NO_EMPTY);
 }
 
 function slugify($text, $length = null) {
