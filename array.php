@@ -97,6 +97,24 @@ function repeat($keys, $value) {
   return array_fill_keys($keys, $value);
 }
 
+function unfold($source, $prefix, $required = null) {
+  $columns = unprefix_keys($source, $prefix);
+  $count = max([0, ...array_map(fn($values) => count((array)$values), $columns)]);
+
+  $rows = [];
+  for($i = 0; $i < $count; $i++) {
+    $row = [];
+    foreach($columns as $column => $values) {
+      $values = (array)$values;
+      $row[$column] = cast_string(@$values[$i]);
+    }
+
+    if(array_filter($row, fn($value) => $value !== null)) $rows[] = $row;
+  }
+
+  return $rows;
+}
+
 function prefix_keys($array, $prefix) {
   return array_combine(
     array_map(fn($k) => "$prefix$k", array_keys($array)),
