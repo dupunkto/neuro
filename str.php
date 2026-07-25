@@ -79,7 +79,7 @@ function slugify($str, $length = null) {
   $str = preg_replace('~[^-\w.]+~', '-', $str);
   $str = trim($str, '-');
   $str = preg_replace('~-+~', '-', $str);
-  $str = strtolower(str);
+  $str = strtolower($str);
 
   if(isset($length) and $length < strlen($str))
     $str = rtrim(substr($str, 0, $length), '-');
