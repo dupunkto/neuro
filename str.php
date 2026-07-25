@@ -87,13 +87,40 @@ function slugify($str, $length = null) {
   return $str;
 }
 
-function extract_email($email) {
-  preg_match('/<([^<>]+)>/', $email, $matches);
-  return $matches[1] ?? null;
+function extract_url($str, $all = false) {
+  $matches = extract_match($str, "=https?://[][[:alnum:]._~:/?#@!$&'()*+,;%-]+=", group: 0);
+
+  return $all ? $matches : @$matches[0];
+}
+
+function extract_email($str, $all = false) {
+  $matches = extract_match($str, '/[[:alnum:]+._-]*@[[:alnum:]+._-]*/', group: 0);
+
+  return $all ? $matches : @$matches[0];
+}
+
+function extract_ip($str, $all = false) {
+  $octet = '(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)';
+  $ipv4 = "$octet(?:\\.$octet){3}";
+  $hex = '[0-9A-Fa-f]{1,4}';
+  $ipv6 = '(?:'
+    . "(?:$hex:){7}(?:$hex|:)"
+    . "|(?:$hex:){6}(?::$hex|$ipv4|:)"
+    . "|(?:$hex:){5}(?:(?::$hex){1,2}|:$ipv4|:)"
+    . "|(?:$hex:){4}(?:(?::$hex){1,3}|(?::$hex)?:$ipv4|:)"
+    . "|(?:$hex:){3}(?:(?::$hex){1,4}|(?::$hex){0,2}:$ipv4|:)"
+    . "|(?:$hex:){2}(?:(?::$hex){1,5}|(?::$hex){0,3}:$ipv4|:)"
+    . "|(?:$hex:)(?:(?::$hex){1,6}|(?::$hex){0,4}:$ipv4|:)"
+    . "|:(?:(?::$hex){1,7}|(?::$hex){0,5}:$ipv4|:)"
+    . ')(?:%[^\s]+)?';
+
+  $matches = extract_match($str, "~$ipv4|$ipv6~", group: 0);
+
+  return $all ? $matches : @$matches[0];
 }
 
 function extract_match($str, $pattern, $group = 1) {
   $acc = [];
   preg_match_all($pattern, $str, $acc);
-  return $group == false ? $acc : $acc[$group];
+  return $group === false ? $acc : $acc[$group];
 }
