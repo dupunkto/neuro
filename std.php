@@ -15,4 +15,3 @@ require __DIR__ . "/mimes.php";
 require __DIR__ . "/currency.php";
 require __DIR__ . "/langs.php";
 require __DIR__ . "/utf8.php";
-require __DIR__ . "/logger.php";
