@@ -56,27 +56,35 @@ function is_nonempty_str($str) {
   return trim($str ?? "") !== "";
 }
 
-function str_implode($glue, $parts) {
-  $parts = array_map('trim', $parts);
-  return implode($glue, array_filter($parts, fn($p) => $p !== ""));
+function str_contains_terms($haystack, $needles) {
+  foreach($needles as $needle) {
+    if(mb_stripos($haystack, $needle) === false) return false;
+  }
+
+  return true;
+}
+
+function str_implode($separator, $array) {
+  $array = array_map('trim', $array);
+  return implode($separator, array_filter($array, fn($p) => $p !== ""));
 }
 
 function str_explode($str) {
   return preg_split('/\s+/', trim($str), -1, PREG_SPLIT_NO_EMPTY);
 }
 
-function slugify($text, $length = null) {
-  $text = strtr($text, UNICODE_TABLE);
-  $text = preg_replace('~[^\pL\d.]+~u', '-', $text);
-  $text = preg_replace('~[^-\w.]+~', '-', $text);
-  $text = trim($text, '-');
-  $text = preg_replace('~-+~', '-', $text);
-  $text = strtolower($text);
+function slugify($str, $length = null) {
+  $str = strtr($str, UNICODE_TABLE);
+  $str = preg_replace('~[^\pL\d.]+~u', '-', $str);
+  $str = preg_replace('~[^-\w.]+~', '-', $str);
+  $str = trim($str, '-');
+  $str = preg_replace('~-+~', '-', $str);
+  $str = strtolower(str);
 
-  if(isset($length) and $length < strlen($text))
-    $text = rtrim(substr($text, 0, $length), '-');
+  if(isset($length) and $length < strlen($str))
+    $str = rtrim(substr($str, 0, $length), '-');
 
-  return $text;
+  return $str;
 }
 
 function extract_email($email) {
