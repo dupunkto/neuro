@@ -86,6 +86,16 @@ function take($array, $amount) {
   return array_slice($array, 0, $amount);
 }
 
+function insert($array, $position, $item) {
+  array_splice($array, $position, 0, [$item]);
+  return $array;
+}
+
+function sorted($array, $compare) {
+  usort($array, $compare);
+  return $array;
+}
+
 function map($array, $key_k, $value_k) {
   return array_reduce($array, function($acc, $item) {
     $acc[$item[$key_k]] = $item[$value_k];
