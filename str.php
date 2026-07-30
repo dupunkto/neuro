@@ -62,6 +62,10 @@ function str_normalize($str) {
   return preg_replace('/\p{Mn}+/u', '', $str);
 }
 
+function str_contains_term($haystack, $needle) {
+  return str_contains(str_normalize($haystack), str_normalize($needle));
+}
+
 function str_contains_terms($haystack, $needles) {
   $haystack = str_normalize($haystack);
 
