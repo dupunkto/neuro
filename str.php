@@ -56,9 +56,17 @@ function is_nonempty_str($str) {
   return trim($str ?? "") !== "";
 }
 
+function str_normalize($str) {
+  $str = mb_strtolower($str);
+  $str = \Normalizer::normalize($str, \Normalizer::FORM_D);
+  return preg_replace('/\p{Mn}+/u', '', $str);
+}
+
 function str_contains_terms($haystack, $needles) {
+  $haystack = str_normalize($haystack);
+
   foreach($needles as $needle) {
-    if(mb_stripos($haystack, $needle) === false) return false;
+    if(!str_contains($haystack, str_normalize($needle))) return false;
   }
 
   return true;
