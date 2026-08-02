@@ -116,7 +116,8 @@ function unfold($source, $prefix, $required = null) {
     $row = [];
     foreach($columns as $column => $values) {
       $values = (array)$values;
-      $row[$column] = cast_string(@$values[$i]);
+      $value = @$values[$i] === null ? null : trim((string)$values[$i]);
+      $row[$column] = $value === "" ? null : $value;
     }
 
     if(array_filter($row, fn($value) => $value !== null)) $rows[] = $row;
