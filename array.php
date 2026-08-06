@@ -7,6 +7,43 @@ function assoc($term) {
   return $term;
 }
 
+function array_require_string($array, $key) {
+  if(!array_key_exists($key, $array))
+    throw new InvalidArgumentException("Missing required key '$key'.");
+  if(!is_string($array[$key]))
+    throw new InvalidArgumentException("Array key '$key' must be a string.");
+  return $array[$key];
+}
+
+function array_get_string($array, $key, $default = null) {
+  if(!array_key_exists($key, $array)) return $default;
+  if(!is_string($array[$key]))
+    throw new InvalidArgumentException("Array key '$key' must be a string.");
+  return $array[$key];
+}
+
+function array_require_int($array, $key) {
+  if(!array_key_exists($key, $array))
+    throw new InvalidArgumentException("Missing required key '$key'.");
+  if(!is_int($array[$key]))
+    throw new InvalidArgumentException("Array key '$key' must be an integer.");
+  return $array[$key];
+}
+
+function array_get_int($array, $key, $default = null) {
+  if(!array_key_exists($key, $array)) return $default;
+  if(!is_int($array[$key]))
+    throw new InvalidArgumentException("Array key '$key' must be an integer.");
+  return $array[$key];
+}
+
+function pluck($items, $key) {
+  return array_values(array_map(
+    fn($item) => is_array($item) ? $item[$key] : $item,
+    $items
+  ));
+}
+
 function zip($separator, $array) {
   $keys = array_keys($array);
   $values = array_values($array);

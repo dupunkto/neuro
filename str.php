@@ -56,6 +56,14 @@ function is_nonempty_str($str) {
   return trim($str ?? "") !== "";
 }
 
+function excerpt($str) {
+  $str = trim($str ?? "");
+
+  return mb_strlen($str, "UTF-8") > 500
+    ? mb_substr($str, 0, 500, "UTF-8") . "…"
+    : $str;
+}
+
 function str_normalize($str) {
   $str = mb_strtolower($str);
   $str = \Normalizer::normalize($str, \Normalizer::FORM_D);
