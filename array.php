@@ -7,6 +7,10 @@ function assoc($term) {
   return $term;
 }
 
+function is_nonempty_list($value) {
+  return is_array($value) && array_is_list($value) && !empty($value);
+}
+
 function array_require_string($array, $key) {
   if(!array_key_exists($key, $array))
     throw new InvalidArgumentException("Missing required key '$key'.");
@@ -190,4 +194,16 @@ function drop_empty($array) {
 
 function deep_contains($haystack, $needle) {
   return $needle and count(array_filter($haystack, fn($candidate) => strpos($needle, $candidate) != false)) > 0;
+}
+
+function has_exact_keys($value, $keys) {
+  if(!is_array($value)) return false;
+  $actual = array_keys($value);
+  sort($actual);
+  sort($keys);
+  return $actual == $keys;
+}
+
+function has_duplicate_keys($array) {
+  return count(array_unique($array)) != count($array);
 }
