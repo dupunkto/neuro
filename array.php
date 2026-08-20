@@ -11,6 +11,10 @@ function is_nonempty_list($value) {
   return is_array($value) && array_is_list($value) && !empty($value);
 }
 
+function is_map($value) {
+  return is_array($value) && (empty($value) || !array_is_list($value));
+}
+
 function array_require_string($array, $key) {
   if(!array_key_exists($key, $array))
     throw new InvalidArgumentException("Missing required key '$key'.");
