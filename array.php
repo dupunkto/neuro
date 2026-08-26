@@ -52,6 +52,15 @@ function pluck($items, $key) {
   ));
 }
 
+function arr_explode($string, $separator = ",") {
+  return array_filter(array_map('trim', explode($separator, $string)));
+}
+
+function arr_implode($array, $separator = ",") {
+  $array = array_map('trim', $array);
+  return implode($separator, array_filter($array, fn($p) => $p !== ""));
+}
+
 function zip($separator, $array) {
   $keys = array_keys($array);
   $values = array_values($array);
